@@ -38,6 +38,8 @@ extensions = [
     "sphinx_inline_tabs",
 ]
 
+numfig = True
+
 # -- Options for extlinks ----------------------------------------------------
 #
 
