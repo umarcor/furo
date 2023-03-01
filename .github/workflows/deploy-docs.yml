@@ -1,7 +1,6 @@
 name: Documentation
 on:
   push:
-    branches: [main]
 
 jobs:
   build:
@@ -10,20 +9,41 @@ jobs:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
       - run: pipx run nox -s docs
-      - uses: actions/upload-pages-artifact@v1
+      - uses: actions/upload-artifact@v3
         with:
           path: ./build/docs/
 
   deploy:
     needs: build
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - id: deployment
-        uses: actions/deploy-pages@v1
+
+      - uses: actions/checkout@v3
+
+      - uses: actions/download-artifact@v3
+
+      - run: |
+          mkdir work
+          cd work
+          git init
+          cp ../.git/config ./.git/config
+          git config --local user.email "Actions@GitHub"
+          git config --local user.name "GitHub Actions"
+          git fetch
+
+          git checkout -b gh-pages origin/gh-pages
+          if [ ! -f .nojekyll ]; then
+            touch .nojekyll
+            git add .nojekyll
+          fi
+
+          version="$GITHUB_REF_NAME"
+          if [ -d "$version" ]; then rm -rf "$version"; fi
+          mkdir -p ./"$version"
+          mv ../artifact/* ./"$version"
+          git add ./"$version"
+
+          git commit -am "update $version $GITHUB_SHA"
+          git push -u origin gh-pages
