@@ -93,6 +93,7 @@ html_theme_options: Dict[str, Any] = {
     "source_repository": "https://github.com/pradyunsg/furo/",
     "source_branch": "main",
     "source_directory": "docs/",
+    "top_of_page_button": "blob",
 }
 
 if "READTHEDOCS" in os.environ:

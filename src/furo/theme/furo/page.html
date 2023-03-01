@@ -68,7 +68,7 @@
           <span>{% trans %}Back to top{% endtrans %}</span>
         </a>
         <div class="content-icon-container">
-          {% if theme_top_of_page_button == "edit" -%}
+          {% if theme_top_of_page_button in ["edit", "blob"] -%}
           {%- include "components/edit-this-page.html" with context -%}
           {%- elif theme_top_of_page_button != None -%}
           {{ warning("Got an unsupported value for 'top_of_page_button'") }}
