@@ -48,5 +48,5 @@ If you wish to disable this, use {ref}`top_of_page_button` and set it to `None`.
 
 ### Source link
 
-Sphinx option {any}`sphinx:html_show_sourcelink` is ignored by this theme.
+Sphinx option {ref}`sphinx:html_show_sourcelink` is ignored by this theme.
 The only supported link to the sources is through the edit button.
